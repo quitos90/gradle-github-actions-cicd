@@ -39,13 +39,7 @@ jobs:
         uses: quitos90/gradle-actions/gradle-build@v1  
 
       # Step 6: Extract version from Gradle
-      - name: Get Version
-        id: get_version
-        uses: quitos90/gradle-actions/gradle-version
-
-      - name: Use version
-        run: echo "La versión es ${{ steps.get_version.outputs.VERSION }}"
-
+      
       # Step 7: Build Docker image with version tag
       - name: Build Docker image
         run: docker build -t quitos90/githubactions:${{ env.VERSION }} .
