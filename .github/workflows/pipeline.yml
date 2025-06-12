@@ -35,15 +35,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
             
-      - name: Build con acción reutilizable
+      - name: Gradle Build
         uses: quitos90/gradle-actions/gradle-build@v1  
 
       # Step 6: Extract version from Gradle
-      - name: Get version from Gradle
+      - name: Get Version
         id: get_version
-        run: |
-          VERSION=$(./gradlew properties -q | grep "^version:" | awk '{print $2}')
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+        uses: quitos90/gradle-actions/gradle-version
+
+      - name: Use version
+        run: echo "La versión es ${{ steps.get_version.outputs.VERSION }}"
 
       # Step 7: Build Docker image with version tag
       - name: Build Docker image
